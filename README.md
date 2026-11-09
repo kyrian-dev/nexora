@@ -62,28 +62,30 @@ Projects, tasks, and workspace preferences are saved using browser **localStorag
 
 Make sure you have installed:
 
-- Node.js
+- Node.js 20.19+ within the 20.x release line, or 22.12+ (required by the locked Vite and Oxlint versions)
 - npm
 - Git
+
+No environment variables, API keys, or backend services are required. Nexora runs in the browser and stores data in localStorage.
 
 ### Installation
 
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/kyrian-dev/project-management-saas.git
+git clone https://github.com/kyrian-dev/nexora.git
 ```
 
 **2. Navigate into the project**
 
 ```bash
-cd project-management-saas
+cd nexora
 ```
 
 **3. Install dependencies**
 
 ```bash
-npm install
+npm ci
 ```
 
 **4. Start the development server**
@@ -102,17 +104,37 @@ Open the local URL displayed in your terminal, typically:
 npm run build
 ```
 
+This runs TypeScript checks and creates the production build in `dist/`.
+
+To preview that build locally:
+
+```bash
+npm run preview
+```
+
+Open the URL printed in the terminal. The preview server is for checking the build locally.
+
+### Linting
+
+```bash
+npm run lint
+```
+
+This runs Oxlint.
+
 ## Project Structure
 
 ```text
-project-management-saas/
+nexora/
 ├── public/
+├── screenshots/
 ├── src/
 │   ├── App.tsx
 │   ├── main.tsx
 │   └── index.css
 ├── index.html
 ├── package.json
+├── package-lock.json
 ├── tsconfig.json
 ├── vite.config.ts
 └── README.md
@@ -127,16 +149,18 @@ When a user creates or updates a task, the application recalculates the associat
 **Project progress formula:**
 
 ```text
-Progress = (Completed Tasks / Total Project Tasks) × 100
+Progress = round((Completed Tasks / Total Project Tasks) × 100)
 ```
 
-Task deadlines are displayed on the dashboard and calendar. Upcoming deadlines exclude completed tasks and are sorted by date.
+Projects with no tasks show 0% progress and a Not Started status.
+
+Task deadlines are displayed on the dashboard and calendar. The dashboard shows up to five incomplete tasks with deadlines, sorted by date, including overdue tasks.
 
 React's `useEffect` hook synchronizes project and task data with localStorage.
 
 ## Screenshots
 
-Add screenshots of your application here.
+The following screenshots are included in the repository's `screenshots/` folder. To refresh them after UI changes, replace the corresponding PNG files and keep the filenames below, or update these image links if the filenames change.
 
 ### Dashboard
 
@@ -153,8 +177,6 @@ Add screenshots of your application here.
 ### Calendar
 
 ![Nexora Calendar](./screenshots/calendar.png)
-
-
 
 ## Future Improvements
 
